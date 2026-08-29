@@ -1,0 +1,1 @@
+//Esse é o script para todas as funções que integram todo o sistema
