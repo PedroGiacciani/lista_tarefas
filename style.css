@@ -86,6 +86,10 @@ main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa > mark{
     border-radius: 10px;
 }
 
+dialog.menu-flutuante{
+    width: 150px;
+}
+
 /*CONFIGURAÇÕES DO RODAPÉ*/
 footer{
     text-align: center;

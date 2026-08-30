@@ -39,6 +39,31 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas){
         resposta.style.color = `#A81C07`
     }else{
         campoListaTarefas.innerHTML = ``
+
+        //Criação do menu, precisa ser fora do forEach
+        var menu = document.createElement('dialog')
+        menu.classList.add('menu-flutuante')
+
+        var lapis = document.createElement('i')
+        lapis.classList.add('fa-solid')
+        lapis.classList.add('fa-pencil')
+
+        var lixeira = document.createElement('i')
+        lixeira.classList.add('fa-solid')
+        lixeira.classList.add('fa-trash')
+
+        var excluir = document.createElement('p')
+        excluir.textContent = 'Excluir tarefa'
+        excluir.appendChild(lixeira)
+
+        var editar = document.createElement('p')
+        editar.textContent = 'Editar tarefa'
+        editar.appendChild(lapis)
+
+        menu.appendChild(excluir)
+        menu.appendChild(editar)
+        document.body.appendChild(menu)
+        
         listaTarefas.forEach(element => {
             var cardTarefa = document.createElement('div')
             cardTarefa.classList.add('card-tarefa')
@@ -63,6 +88,19 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas){
             cardTarefa.appendChild(statusTarefa)
             // cardTarefa.appendChild(dataTarefa)
             campoListaTarefas.appendChild(cardTarefa)
+
+            cardTarefa.addEventListener('contextmenu', (event) => {
+                event.preventDefault()
+                menu.style.top = `${event.clientY}px`
+                if(event.clientX/window.innerWidth * 100 > 65){
+                    menu.style.left = `${event.clientX - 150}px`
+                }else{
+                    menu.style.left = `${event.clientX}px`
+                }
+                menu.show()
+            })
+
+            menu.addEventListener('mouseleave', () => menu.close())
         })
     }
 }
