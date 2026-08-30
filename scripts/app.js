@@ -17,6 +17,12 @@ var pesquisaTarefa = document.getElementById('ipesquisar-tarefa')
 var btnPesquisaTarefa = document.getElementById('btn-pesquisar-tarefa')
 var campoListaTarefas = document.getElementById('lista-tarefas')
 var campoStatusTarefas = document.getElementById('status-tarefas')
+var cardTarefa = document.getElementsByClassName('card-tarefa')
+
+//Variáveis do menu
+var menu = document.getElementById('menu-flutuante')
+var editar = document.getElementById('editar')
+var excluir = document.getElementById('excluir')  
 
 //Variáveis globais
 var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
@@ -37,5 +43,18 @@ btnAddTarefa.addEventListener('click', () => {
     inputTarefa.focus()
 })
 
-document.addEventListener('DOMContentLoaded', () => mostrarTarefas(
-campoListaTarefas, listaTarefas, resposta))
+document.addEventListener('DOMContentLoaded', () => mostrarTarefas(campoListaTarefas, listaTarefas, resposta))
+
+console.log(cardTarefa)
+cardTarefa.forEach(element => {
+    element.addEventListener('contextmenu', (event) => {    
+        event.preventDefault()
+        menu.style.top = `${event.clientY}px`
+        if(event.clientX/window.innerWidth * 100 > 65){
+            menu.style.left = `${event.clientX - 150}px`
+        }else{
+            menu.style.left = `${event.clientX}px`
+        }
+        menu.show()
+    })
+})

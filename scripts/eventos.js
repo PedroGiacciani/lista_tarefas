@@ -32,42 +32,13 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
 }
 
 export function mostrarTarefas(campoListaTarefas, listaTarefas, resposta){
-    campoListaTarefas.innerHTML = ``
+    campoListaTarefas.innerHTML = `` 
     if(!listaTarefas.length){
         var resposta = document.createElement('p')
         campoListaTarefas.appendChild(resposta)
         resposta.textContent = `Nenhuma tarefa criada ainda! Para ver sua lista de tarefas, comece criando uma no formulário acima`
         resposta.style.color = `#A81C07`
     }else{
-        var index = -1
-
-        //Criação do menu, precisa ser fora do forEach
-        var menu = document.createElement('dialog')
-        menu.classList.add('menu-flutuante')
-
-        var options = document.createElement('div')
-
-        var lapis = document.createElement('i')
-        lapis.classList.add('fa-solid')
-        lapis.classList.add('fa-pencil')
-
-        var lixeira = document.createElement('i')
-        lixeira.classList.add('fa-solid')
-        lixeira.classList.add('fa-trash')
-
-        var excluir = document.createElement('p')
-        excluir.textContent = 'Excluir tarefa'
-        excluir.appendChild(lixeira)
-
-        var editar = document.createElement('p')
-        editar.textContent = 'Editar tarefa'
-        editar.appendChild(lapis)
-
-        options.appendChild(excluir)
-        options.appendChild(editar)
-        menu.appendChild(options)
-        document.body.appendChild(menu)
-        
         listaTarefas.forEach(element => {
             var cardTarefa = document.createElement('div')
             cardTarefa.classList.add('card-tarefa')
@@ -92,26 +63,6 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas, resposta){
             cardTarefa.appendChild(statusTarefa)
             // cardTarefa.appendChild(dataTarefa)
             campoListaTarefas.appendChild(cardTarefa)
-
-            cardTarefa.addEventListener('contextmenu', (event) => {
-                event.preventDefault()
-                menu.style.top = `${event.clientY}px`
-                if(event.clientX/window.innerWidth * 100 > 65){
-                    menu.style.left = `${event.clientX - 150}px`
-                }else{
-                    menu.style.left = `${event.clientX}px`
-                }
-                menu.show()
-                index = listaTarefas.indexOf(element)
-            })
-
-            document.addEventListener('click', () => menu.close())
-        })
-        excluir.addEventListener('click', () => {
-            resposta.innerText = `Tarefa - ${listaTarefas[index].titulo} - excluída!!!`
-            resposta.style.color = '#A81C07'
-            excluirTarefa(listaTarefas, index, campoListaTarefas)
-            mostrarTarefas(campoListaTarefas, listaTarefas)
         })
     }
 }

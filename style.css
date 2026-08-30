@@ -86,7 +86,7 @@ main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa > mark{
     border-radius: 10px;
 }
 
-dialog.menu-flutuante{
+dialog#menu-flutuante{
     background-color: var(--corDestaque);
     width: 150px;
     border-radius: 5px;
@@ -96,18 +96,18 @@ dialog.menu-flutuante{
     transition: opacity .15s ease, overlay .15s ease allow-discrete, display .15s ease allow-discrete;
 }
 
-dialog.menu-flutuante[open]{
+dialog#menu-flutuante[open]{
     opacity: 1;
 }
 
 @starting-style{
-    dialog.menu-flutuante[open]{
+    dialog#menu-flutuante[open]{
         opacity: 0;
     }
 }
 
 
-dialog.menu-flutuante > div{
+dialog#menu-flutuante > div{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -116,13 +116,13 @@ dialog.menu-flutuante > div{
     border: 0;
 }
 
-dialog.menu-flutuante > div > p{
+dialog#menu-flutuante > div > p{
     height: 50%;
     padding: 5px;
     cursor: pointer;
 }
 
-dialog.menu-flutuante > div > p:hover{
+dialog#menu-flutuante > div > p:hover{
     background-color: rgba(216, 216, 216, 0.253);
 }
 
