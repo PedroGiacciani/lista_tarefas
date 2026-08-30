@@ -31,14 +31,14 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
     }
 }
 
-export function mostrarTarefas(campoListaTarefas, listaTarefas){
+export function mostrarTarefas(campoListaTarefas, listaTarefas, resposta){
+    campoListaTarefas.innerHTML = ``
     if(!listaTarefas.length){
         var resposta = document.createElement('p')
         campoListaTarefas.appendChild(resposta)
         resposta.textContent = `Nenhuma tarefa criada ainda! Para ver sua lista de tarefas, comece criando uma no formulário acima`
         resposta.style.color = `#A81C07`
     }else{
-        campoListaTarefas.innerHTML = ``
         var index = -1
 
         //Criação do menu, precisa ser fora do forEach
@@ -107,12 +107,16 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas){
 
             document.addEventListener('click', () => menu.close())
         })
-        excluir.addEventListener('click', () => excluirTarefa(listaTarefas, index))
+        excluir.addEventListener('click', () => {
+            resposta.innerText = `Tarefa - ${listaTarefas[index].titulo} - excluída!!!`
+            resposta.style.color = '#A81C07'
+            excluirTarefa(listaTarefas, index, campoListaTarefas)
+            mostrarTarefas(campoListaTarefas, listaTarefas)
+        })
     }
 }
 
 function excluirTarefa(listaTarefas, index){
-    console.log(listaTarefas, index)
     listaTarefas.splice(index, 1)
     localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
 }

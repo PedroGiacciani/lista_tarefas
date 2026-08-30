@@ -24,7 +24,7 @@ var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
 inputTarefa.addEventListener('keypress', (event) => {
     if(event.key == 'Enter'){
         adicionarTarefa(listaTarefas, inputTarefa.value, resposta)
-        mostrarTarefas(campoListaTarefas, listaTarefas)
+        mostrarTarefas(campoListaTarefas, listaTarefas, resposta)
         inputTarefa.value = ``
         inputTarefa.focus()
     }
@@ -32,10 +32,10 @@ inputTarefa.addEventListener('keypress', (event) => {
 
 btnAddTarefa.addEventListener('click', () => {
     adicionarTarefa(listaTarefas, inputTarefa.value, resposta)
-    mostrarTarefas(campoListaTarefas, listaTarefas)
+    mostrarTarefas(campoListaTarefas, listaTarefas, resposta)
     inputTarefa.value = ``
     inputTarefa.focus()
 })
 
 document.addEventListener('DOMContentLoaded', () => mostrarTarefas(
-campoListaTarefas, listaTarefas))
+campoListaTarefas, listaTarefas, resposta))
