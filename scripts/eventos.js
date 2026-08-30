@@ -39,10 +39,13 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas){
         resposta.style.color = `#A81C07`
     }else{
         campoListaTarefas.innerHTML = ``
+        var index = -1
 
         //Criação do menu, precisa ser fora do forEach
         var menu = document.createElement('dialog')
         menu.classList.add('menu-flutuante')
+
+        var options = document.createElement('div')
 
         var lapis = document.createElement('i')
         lapis.classList.add('fa-solid')
@@ -60,8 +63,9 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas){
         editar.textContent = 'Editar tarefa'
         editar.appendChild(lapis)
 
-        menu.appendChild(excluir)
-        menu.appendChild(editar)
+        options.appendChild(excluir)
+        options.appendChild(editar)
+        menu.appendChild(options)
         document.body.appendChild(menu)
         
         listaTarefas.forEach(element => {
@@ -98,9 +102,17 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas){
                     menu.style.left = `${event.clientX}px`
                 }
                 menu.show()
+                index = listaTarefas.indexOf(element)
             })
 
-            menu.addEventListener('mouseleave', () => menu.close())
+            document.addEventListener('click', () => menu.close())
         })
+        excluir.addEventListener('click', () => excluirTarefa(listaTarefas, index))
     }
+}
+
+function excluirTarefa(listaTarefas, index){
+    console.log(listaTarefas, index)
+    listaTarefas.splice(index, 1)
+    localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
 }

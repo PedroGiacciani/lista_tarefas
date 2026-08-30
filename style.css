@@ -87,7 +87,43 @@ main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa > mark{
 }
 
 dialog.menu-flutuante{
+    background-color: var(--corDestaque);
     width: 150px;
+    border-radius: 5px;
+    border: 0;
+    outline: 1px solid rgba(0, 0, 0, 0.384);
+    opacity: 0;
+    transition: opacity .15s ease, overlay .15s ease allow-discrete, display .15s ease allow-discrete;
+}
+
+dialog.menu-flutuante[open]{
+    opacity: 1;
+}
+
+@starting-style{
+    dialog.menu-flutuante[open]{
+        opacity: 0;
+    }
+}
+
+
+dialog.menu-flutuante > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-height: 50px;
+    padding: 5px 0px;
+    border: 0;
+}
+
+dialog.menu-flutuante > div > p{
+    height: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+dialog.menu-flutuante > div > p:hover{
+    background-color: rgba(216, 216, 216, 0.253);
 }
 
 /*CONFIGURAÇÕES DO RODAPÉ*/
