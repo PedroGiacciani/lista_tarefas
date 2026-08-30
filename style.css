@@ -45,15 +45,45 @@ section#adicionar-tarefa, section#campo-tarefas{
     text-align: center;
     border-radius: 10px;
     margin: 10px;
-    padding: 20px;
+    padding: 15px;
 }
 
 main > section#adicionar-tarefa{
     height: 75px;
 }
 
+main > section#adicionar-tarefa > div#add-tarefa-response{
+    margin: 30px 0px;
+}
+
 main > section#campo-tarefas{
     min-height: 65vh;
+}
+
+main > section#campo-tarefas > div#lista-tarefas{
+    margin-top: 30px;
+}
+
+main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    margin: 10px 0px;
+    padding: 10px 5px;
+
+}
+
+main > section#campo-tarefas > div#lista-tarefas > p{
+    margin: 30px;
+}
+
+main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa > mark{
+    padding: 4px;
+    border-radius: 10px;
 }
 
 /*CONFIGURAÇÕES DO RODAPÉ*/
