@@ -7,6 +7,12 @@ import { Tarefa } from "./tarefa.js";
 var data = new Date() 
 var agora = `${data.toLocaleDateString('pt-BR')} ${data.getHours()}:${data.getMinutes()}`
 
+//Variáveis do menu
+var menu = document.getElementById('menu-flutuante')
+var editar = document.getElementById('editar')
+var excluir = document.getElementById('excluir')  
+var index = -1
+
 export function adicionarTarefa(listaTarefas, titulo, resposta){
     var regra1 = /^\w/
     var regra2 = /^.{3,30}$/
@@ -31,7 +37,8 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
     }
 }
 
-export function mostrarTarefas(campoListaTarefas, listaTarefas, resposta){
+export function mostrarTarefas(listaTarefas){
+    var campoListaTarefas = document.getElementById('lista-tarefas')
     campoListaTarefas.innerHTML = `` 
     if(!listaTarefas.length){
         var resposta = document.createElement('p')
@@ -63,11 +70,31 @@ export function mostrarTarefas(campoListaTarefas, listaTarefas, resposta){
             cardTarefa.appendChild(statusTarefa)
             // cardTarefa.appendChild(dataTarefa)
             campoListaTarefas.appendChild(cardTarefa)
+
+            cardTarefa.addEventListener('contextmenu', (event) => {    
+                event.preventDefault()
+                menu.style.top = `${event.clientY}px`
+                if(event.clientX/window.innerWidth * 100 > 65){
+                    menu.style.left = `${event.clientX - 150}px`
+                }else{
+                    menu.style.left = `${event.clientX}px`
+                }
+                menu.show()
+                index = listaTarefas.indexOf(element)
+            })
         })
     }
 }
 
-function excluirTarefa(listaTarefas, index){
+document.addEventListener('click', () => menu.close())
+excluir.addEventListener('click', () =>{
+    excluirTarefa(index)
+})
+
+
+function excluirTarefa(index){
+    var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
     listaTarefas.splice(index, 1)
     localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+    mostrarTarefas(listaTarefas)
 }
