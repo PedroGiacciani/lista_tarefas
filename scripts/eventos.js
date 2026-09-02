@@ -91,6 +91,12 @@ excluir.addEventListener('click', () =>{
     excluirTarefa(index)
 })
 
+editar.addEventListener('click', () => {
+    var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
+    var novoTitulo = prompt('Qual será o novo nome da tarefa?')
+    localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+    mostrarTarefas(listaTarefas)
+})
 
 function excluirTarefa(index){
     var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []

@@ -9,4 +9,8 @@ export class Tarefa{
         this.concluida = false
         this.dataCriacao = dataCriacao
     }
+
+    renomear(novoTitulo){
+        this.titulo = novoTitulo
+    }
 }
