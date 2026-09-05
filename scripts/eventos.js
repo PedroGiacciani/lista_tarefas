@@ -92,11 +92,13 @@ document.addEventListener('click', () => menu.close())
 
 export function excluirTarefa(listaTarefas, resposta){
     var indice = listaTarefas.indexOf(tarefaSelecionada)
-    listaTarefas.splice(indice, 1)
-    localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
-    resposta.innerText = ''
-    resposta.innerText = `Tarefa ${tarefaSelecionada.titulo} Excluída!!`
-    resposta.style.color = '#A81C07'
+    if(confirm(`Deseja mesmo excluir a tarefa: ${tarefaSelecionada.titulo}?`)){
+        listaTarefas.splice(indice, 1)
+        localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+        resposta.innerText = ''
+        resposta.innerText = `Tarefa ${tarefaSelecionada.titulo} Excluída!!`
+        resposta.style.color = '#A81C07'
+    }
 }
 
 export function editarTarefa(listaTarefas, resposta){
