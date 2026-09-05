@@ -1,7 +1,7 @@
 //Esse é o script para as funções que integram todo o sistema
 
 //Importações
-import { adicionarTarefa, mostrarTarefas } from "./eventos.js"
+import { adicionarTarefa, excluirTarefa, mostrarTarefas } from "./eventos.js"
 
 //Declaração das variáveis principais
 
@@ -17,7 +17,10 @@ var pesquisaTarefa = document.getElementById('ipesquisar-tarefa')
 var btnPesquisaTarefa = document.getElementById('btn-pesquisar-tarefa')
 var campoListaTarefas = document.getElementById('lista-tarefas')
 var campoStatusTarefas = document.getElementById('status-tarefas')
-var cardTarefa = document.getElementsByClassName('card-tarefa')
+
+//Variavéis de dialog
+var excluir = document.getElementById('excluir')
+var editar = document.getElementById('editar')
 
 //Variáveis globais
 var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
@@ -25,7 +28,7 @@ var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
 inputTarefa.addEventListener('keypress', (event) => {
     if(event.key == 'Enter'){
         adicionarTarefa(listaTarefas, inputTarefa.value, resposta)
-        mostrarTarefas(listaTarefas)
+        mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
         inputTarefa.value = ``
         inputTarefa.focus()
     }
@@ -33,9 +36,14 @@ inputTarefa.addEventListener('keypress', (event) => {
 
 btnAddTarefa.addEventListener('click', () => {
     adicionarTarefa(listaTarefas, inputTarefa.value, resposta)
-    mostrarTarefas(listaTarefas)
+    mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
     inputTarefa.value = ``
     inputTarefa.focus()
 })
 
-document.addEventListener('DOMContentLoaded', () => mostrarTarefas(listaTarefas))
+document.addEventListener('DOMContentLoaded', () => mostrarTarefas(listaTarefas, campoListaTarefas, resposta))
+
+excluir.addEventListener('click', () => {
+    excluirTarefa(listaTarefas)
+    mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+})

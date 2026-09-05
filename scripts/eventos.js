@@ -9,10 +9,7 @@ var agora = `${data.toLocaleDateString('pt-BR')} ${data.getHours()}:${data.getMi
 
 //Variáveis do menu
 var menu = document.getElementById('menu-flutuante')
-var editar = document.getElementById('editar')
-var excluir = document.getElementById('excluir')  
-var index = -1
-
+var tarefaSelecionada = 0
 export function adicionarTarefa(listaTarefas, titulo, resposta){
     var regra1 = /^\w/
     var regra2 = /^.{3,30}$/
@@ -34,11 +31,34 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
 
         listaTarefas.push(tarefa)
         localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+        console.log('tarefa adicionada')
     }
 }
 
-export function mostrarTarefas(listaTarefas){
-    var campoListaTarefas = document.getElementById('lista-tarefas')
+function criarCardTarefa(element, index, campoListaTarefas){
+    var cardTarefa = document.createElement('div')
+    cardTarefa.setAttribute('id', `${index}`)
+    var checkBox = document.createElement('input')
+    checkBox.type = 'checkbox'
+    var nomeTarefa = document.createElement('p')
+    var statusTarefa = document.createElement('mark')
+    
+    nomeTarefa.textContent = `${element.titulo}`
+    if(element.concluida){
+        statusTarefa.textContent = `Concluída`
+        statusTarefa.style.background = 'green'
+    }else{
+        statusTarefa.textContent = `Em andamento`
+        statusTarefa.style.background = 'red'
+    }
+
+    cardTarefa.appendChild(checkBox)
+    cardTarefa.appendChild(nomeTarefa)
+    cardTarefa.appendChild(statusTarefa)
+    campoListaTarefas.appendChild(cardTarefa)
+}
+
+export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
     campoListaTarefas.innerHTML = `` 
     if(!listaTarefas.length){
         var resposta = document.createElement('p')
@@ -47,29 +67,9 @@ export function mostrarTarefas(listaTarefas){
         resposta.style.color = `#A81C07`
     }else{
         listaTarefas.forEach(element => {
-            var cardTarefa = document.createElement('div')
-            cardTarefa.classList.add('card-tarefa')
-            var checkBox = document.createElement('input')
-            checkBox.type = 'checkbox'
-            var nomeTarefa = document.createElement('p')
-            var statusTarefa = document.createElement('mark')
-            // var dataTarefa = document.createElement('p')
-            
-            nomeTarefa.textContent = `${element.titulo}`
-            // dataTarefa.textContent = `${element.dataCriacao}`
-            if(element.concluida){
-                statusTarefa.textContent = `Concluída`
-                statusTarefa.style.background = 'green'
-            }else{
-                statusTarefa.textContent = `Em andamento`
-                statusTarefa.style.background = 'red'
-            }
-
-            cardTarefa.appendChild(checkBox)
-            cardTarefa.appendChild(nomeTarefa)
-            cardTarefa.appendChild(statusTarefa)
-            // cardTarefa.appendChild(dataTarefa)
-            campoListaTarefas.appendChild(cardTarefa)
+            var index = listaTarefas.indexOf(element)
+            criarCardTarefa(element, index, campoListaTarefas)
+            var cardTarefa = document.getElementById(`${index}`)
 
             cardTarefa.addEventListener('contextmenu', (event) => {    
                 event.preventDefault()
@@ -80,27 +80,18 @@ export function mostrarTarefas(listaTarefas){
                     menu.style.left = `${event.clientX}px`
                 }
                 menu.show()
-                index = listaTarefas.indexOf(element)
+                tarefaSelecionada = element
             })
+
         })
+        console.log('tarefas carregadas')
     }
 }
 
 document.addEventListener('click', () => menu.close())
-excluir.addEventListener('click', () =>{
-    excluirTarefa(index)
-})
 
-editar.addEventListener('click', () => {
-    var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
-    var novoTitulo = prompt('Qual será o novo nome da tarefa?')
+export function excluirTarefa(listaTarefas){
+    var indice = listaTarefas.indexOf(tarefaSelecionada)
+    listaTarefas.splice(indice, 1)
     localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
-    mostrarTarefas(listaTarefas)
-})
-
-function excluirTarefa(index){
-    var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
-    listaTarefas.splice(index, 1)
-    localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
-    mostrarTarefas(listaTarefas)
 }

@@ -64,7 +64,7 @@ main > section#campo-tarefas > div#lista-tarefas{
     margin-top: 30px;
 }
 
-main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa{
+main > section#campo-tarefas > div#lista-tarefas > div{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -81,7 +81,7 @@ main > section#campo-tarefas > div#lista-tarefas > p{
     margin: 30px;
 }
 
-main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa > mark{
+main > section#campo-tarefas > div#lista-tarefas > div > mark{
     padding: 4px;
     border-radius: 10px;
 }
