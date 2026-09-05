@@ -13,4 +13,12 @@ export class Tarefa{
     renomear(novoTitulo){
         this.titulo = novoTitulo
     }
+
+    mudarStatus(){
+        if(!this.concluida){
+            this.concluida = true
+        }else if(this.concluida){
+            this.concluida = false
+        }
+    }
 }

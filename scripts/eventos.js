@@ -39,7 +39,9 @@ function criarCardTarefa(element, index, campoListaTarefas){
     var cardTarefa = document.createElement('div')
     cardTarefa.setAttribute('id', `${index}`)
     var checkBox = document.createElement('input')
+    checkBox.setAttribute('id', `${index}`)
     checkBox.type = 'checkbox'
+
     var nomeTarefa = document.createElement('p')
     var statusTarefa = document.createElement('mark')
     
@@ -47,9 +49,11 @@ function criarCardTarefa(element, index, campoListaTarefas){
     if(element.concluida){
         statusTarefa.textContent = `Concluída`
         statusTarefa.style.background = 'green'
-    }else{
+        checkBox.checked = true
+    }else if(!element.concluida){
         statusTarefa.textContent = `Em andamento`
         statusTarefa.style.background = 'red'
+        checkBox.checked = false
     }
 
     cardTarefa.appendChild(checkBox)
@@ -82,7 +86,12 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
                 menu.show()
                 tarefaSelecionada = element
             })
-
+            
+            var checkBox = document.getElementById(`${index}`)
+            checkBox.addEventListener('change', () => {
+                mudarStatusTarefa(listaTarefas, checkBox, element)
+                mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+            })
         })
         console.log('tarefas carregadas')
     }
@@ -96,7 +105,7 @@ export function excluirTarefa(listaTarefas, resposta){
         listaTarefas.splice(indice, 1)
         localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
         resposta.innerText = ''
-        resposta.innerText = `Tarefa ${tarefaSelecionada.titulo} Excluída!!`
+        resposta.innerText = `Tarefa: ${tarefaSelecionada.titulo} Excluída!!`
         resposta.style.color = '#A81C07'
     }
 }
@@ -116,4 +125,14 @@ export function editarTarefa(listaTarefas, resposta){
     resposta.innerText = `` 
     resposta.innerText = `Tarefa ${nome} renomeada para ${listaTarefas[indice].titulo}!!!`
     resposta.style.color = '#0b3d2e'
+}
+
+function mudarStatusTarefa(listaTarefas, checkBox, element){
+    var indice = listaTarefas.indexOf(element)
+    listaTarefas.forEach(pos => {
+        const tarefa = new Tarefa(pos.titulo, pos.dataCriacao)
+        tarefa.mudarStatus(checkBox)
+        listaTarefas[indice].concluida = tarefa.concluida
+    })
+    localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
 }

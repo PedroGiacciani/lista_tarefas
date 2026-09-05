@@ -5,7 +5,7 @@ import {
     adicionarTarefa,
     excluirTarefa, 
     mostrarTarefas, 
-    editarTarefa 
+    editarTarefa,
 } from "./eventos.js"
 
 //Declaração das variáveis principais
