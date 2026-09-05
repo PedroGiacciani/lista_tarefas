@@ -54,6 +54,6 @@ excluir.addEventListener('click', () => {
 })
 
 editar.addEventListener('click', () => {
-    editarTarefa(listaTarefas)
+    editarTarefa(listaTarefas, resposta)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
 })

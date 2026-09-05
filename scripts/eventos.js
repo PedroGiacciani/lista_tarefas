@@ -99,8 +99,9 @@ export function excluirTarefa(listaTarefas, resposta){
     resposta.style.color = '#A81C07'
 }
 
-export function editarTarefa(listaTarefas){
+export function editarTarefa(listaTarefas, resposta){
     var indice = listaTarefas.indexOf(tarefaSelecionada)
+    var nome = tarefaSelecionada.titulo
     listaTarefas.forEach(pos => {
         const tarefa = new Tarefa(pos.titulo, pos.dataCriacao)
         if(tarefa.titulo == listaTarefas[indice].titulo){
@@ -110,4 +111,7 @@ export function editarTarefa(listaTarefas){
             localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
         }
     })
+    resposta.innerText = `` 
+    resposta.innerText = `Tarefa ${nome} renomeada para ${listaTarefas[indice].titulo}!!!`
+    resposta.style.color = '#0b3d2e'
 }
