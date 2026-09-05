@@ -44,6 +44,6 @@ btnAddTarefa.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => mostrarTarefas(listaTarefas, campoListaTarefas, resposta))
 
 excluir.addEventListener('click', () => {
-    excluirTarefa(listaTarefas)
+    excluirTarefa(listaTarefas, resposta)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
 })
