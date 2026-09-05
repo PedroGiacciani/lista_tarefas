@@ -1,7 +1,12 @@
 //Esse é o script para as funções que integram todo o sistema
 
 //Importações
-import { adicionarTarefa, excluirTarefa, mostrarTarefas } from "./eventos.js"
+import { 
+    adicionarTarefa,
+    excluirTarefa, 
+    mostrarTarefas, 
+    editarTarefa 
+} from "./eventos.js"
 
 //Declaração das variáveis principais
 
@@ -45,5 +50,10 @@ document.addEventListener('DOMContentLoaded', () => mostrarTarefas(listaTarefas,
 
 excluir.addEventListener('click', () => {
     excluirTarefa(listaTarefas, resposta)
+    mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+})
+
+editar.addEventListener('click', () => {
+    editarTarefa(listaTarefas)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
 })
