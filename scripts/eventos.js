@@ -24,7 +24,7 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
         resposta.style.color = '#A81C07'
     }
     else{
-        const tarefa = new Tarefa(titulo, agora)
+        const tarefa = new Tarefa(titulo, agora, false)
         resposta.innerText =''
         resposta.innerText = `Tarefa registrada!! - ${tarefa.titulo}, criada em ${tarefa.dataCriacao}`
         resposta.style.color = `#0b3d2e`
@@ -89,8 +89,7 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
             
             var checkBox = document.getElementById(`${index}`)
             checkBox.addEventListener('change', () => {
-                mudarStatusTarefa(listaTarefas, checkBox, element)
-                mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+                mudarStatusTarefa(listaTarefas, checkBox, element, campoListaTarefas, resposta)
             })
         })
         console.log('tarefas carregadas')
@@ -127,12 +126,13 @@ export function editarTarefa(listaTarefas, resposta){
     resposta.style.color = '#0b3d2e'
 }
 
-function mudarStatusTarefa(listaTarefas, checkBox, element){
+function mudarStatusTarefa(listaTarefas, checkBox, element, campoListaTarefas, resposta){
     var indice = listaTarefas.indexOf(element)
-    listaTarefas.forEach(pos => {
-        const tarefa = new Tarefa(pos.titulo, pos.dataCriacao)
-        tarefa.mudarStatus(checkBox)
-        listaTarefas[indice].concluida = tarefa.concluida
-    })
+    console.log(checkBox.checked)
+    const tarefa = new Tarefa(element.titulo, element.dataCriacao, element.concluida)
+    console.log(tarefa)
+    tarefa.mudarStatus()
+    listaTarefas[indice].concluida = tarefa.concluida
     localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+    mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
 }

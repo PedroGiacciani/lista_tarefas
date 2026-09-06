@@ -4,9 +4,9 @@
 
 //Classe tarefa
 export class Tarefa{
-    constructor(titulo, dataCriacao){
+    constructor(titulo, dataCriacao, concluida){
         this.titulo = titulo
-        this.concluida = false
+        this.concluida = concluida
         this.dataCriacao = dataCriacao
     }
 
@@ -17,8 +17,16 @@ export class Tarefa{
     mudarStatus(){
         if(!this.concluida){
             this.concluida = true
-        }else if(this.concluida){
+        }else{
             this.concluida = false
         }
     }
+
+    // concluir(){
+    //     this.concluida = true
+    // }
+
+    // naoConcluir(){
+    //     this.concluida = false
+    // }
 }
