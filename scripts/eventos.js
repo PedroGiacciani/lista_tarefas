@@ -24,7 +24,7 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
         resposta.style.color = '#A81C07'
     }
     else{
-        const tarefa = new Tarefa(titulo, agora, false)
+        const tarefa = new Tarefa(titulo.toLowerCase(), agora, false)
         resposta.innerText =''
         resposta.innerText = `Tarefa registrada!! - ${tarefa.titulo}, criada em ${tarefa.dataCriacao}`
         resposta.style.color = `#0b3d2e`
@@ -150,10 +150,15 @@ export function filtrarTarefas(valor, campoListaTarefas, resposta, listaTarefas)
     var novaLista = []
     console.log(valor)
     if(valor == 'Todas'){
-        mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+        novaLista = listaTarefas
     }else{
         novaLista = listaTarefas.filter(pos => String(pos.concluida) == valor)
         console.log(novaLista)
-        mostrarTarefas(novaLista, campoListaTarefas, resposta)
     }
+    mostrarTarefas(novaLista, campoListaTarefas, resposta)
 }
+
+export function pesquisarTarefa(valor, listaTarefas, campoListaTarefas, resposta){
+    var novaLista = listaTarefas.filter(pos => pos.titulo.toLowerCase().includes(valor) )
+    mostrarTarefas(novaLista, campoListaTarefas, resposta)
+} 

@@ -6,7 +6,8 @@ import {
     excluirTarefa, 
     mostrarTarefas, 
     editarTarefa,
-    filtrarTarefas
+    filtrarTarefas,
+    pesquisarTarefa
 } from "./eventos.js"
 
 //Declaração das variáveis principais
@@ -62,4 +63,8 @@ editar.addEventListener('click', () => {
 
 filtroTarefa.addEventListener('change', () => {
     filtrarTarefas(filtroTarefa.value, campoListaTarefas, resposta, listaTarefas)
+})
+
+pesquisaTarefa.addEventListener('input', () => {
+    pesquisarTarefa(pesquisaTarefa.value, listaTarefas, campoListaTarefas, resposta)
 })
