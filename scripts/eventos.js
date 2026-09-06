@@ -134,5 +134,26 @@ function mudarStatusTarefa(listaTarefas, checkBox, element, campoListaTarefas, r
     tarefa.mudarStatus()
     listaTarefas[indice].concluida = tarefa.concluida
     localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+    if(listaTarefas[indice].concluida){
+        resposta.innerText = ``
+        resposta.innerText = `Tarefa: ${listaTarefas[indice].titulo} concluída!`
+        resposta.style.color = '#0b3d2e'
+    }else{
+        resposta.innerText = ``
+        resposta.innerText = `Tarefa: ${listaTarefas[indice].titulo} em andamento!`
+        resposta.style.color = '#A81C07'
+    }
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+}
+
+export function filtrarTarefas(valor, campoListaTarefas, resposta, listaTarefas){
+    var novaLista = []
+    console.log(valor)
+    if(valor == 'Todas'){
+        mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+    }else{
+        novaLista = listaTarefas.filter(pos => String(pos.concluida) == valor)
+        console.log(novaLista)
+        mostrarTarefas(novaLista, campoListaTarefas, resposta)
+    }
 }

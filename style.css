@@ -60,6 +60,10 @@ main > section#campo-tarefas{
     min-height: 65vh;
 }
 
+main > section#campo-tarefas > p#filtrar-tarefa{
+    margin-top: 20px;
+}
+
 main > section#campo-tarefas > div#lista-tarefas{
     margin-top: 30px;
 }

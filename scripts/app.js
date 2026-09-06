@@ -6,6 +6,7 @@ import {
     excluirTarefa, 
     mostrarTarefas, 
     editarTarefa,
+    filtrarTarefas
 } from "./eventos.js"
 
 //Declaração das variáveis principais
@@ -20,6 +21,7 @@ campoResposta.appendChild(resposta)
 //Variáveis de section#campo-tarefas
 var pesquisaTarefa = document.getElementById('ipesquisar-tarefa')
 var btnPesquisaTarefa = document.getElementById('btn-pesquisar-tarefa')
+var filtroTarefa = document.getElementById('ifiltro')
 var campoListaTarefas = document.getElementById('lista-tarefas')
 var campoStatusTarefas = document.getElementById('status-tarefas')
 
@@ -56,4 +58,8 @@ excluir.addEventListener('click', () => {
 editar.addEventListener('click', () => {
     editarTarefa(listaTarefas, resposta)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+})
+
+filtroTarefa.addEventListener('change', () => {
+    filtrarTarefas(filtroTarefa.value, campoListaTarefas, resposta, listaTarefas)
 })

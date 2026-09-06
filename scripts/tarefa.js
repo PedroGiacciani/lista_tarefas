@@ -21,12 +21,4 @@ export class Tarefa{
             this.concluida = false
         }
     }
-
-    // concluir(){
-    //     this.concluida = true
-    // }
-
-    // naoConcluir(){
-    //     this.concluida = false
-    // }
 }
