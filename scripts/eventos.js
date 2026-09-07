@@ -9,6 +9,8 @@ var agora = `${data.toLocaleDateString('pt-BR')} ${data.getHours()}:${data.getMi
 
 //Variáveis do menu
 var menu = document.getElementById('menu-flutuante')
+var info = document.getElementById('info')
+var txtInfo = document.getElementById('texto-info')
 var tarefaSelecionada = 0
 export function adicionarTarefa(listaTarefas, titulo, resposta){
     var regra1 = /^\w/
@@ -86,6 +88,21 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
                 menu.show()
                 tarefaSelecionada = element
             })
+
+            cardTarefa.addEventListener('mouseover', (event) => {    
+                info.style.top = `${event.clientY}px`
+                if(event.clientX/window.innerWidth * 100 > 65){
+                    info.style.left = `${event.clientX - 150}px`
+                }else{
+                    info.style.left = `${event.clientX}px`
+                }
+                setTimeout(() => {
+                    info.show()
+                }, 2500)
+                txtInfo.innerText = `Criado em: ${element.dataCriacao}`
+            })
+
+            cardTarefa.addEventListener('mousemove', () => info.close())
             
             var checkBox = document.getElementById(`${index}`)
             checkBox.addEventListener('change', () => {

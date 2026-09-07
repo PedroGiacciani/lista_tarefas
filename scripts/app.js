@@ -21,7 +21,6 @@ campoResposta.appendChild(resposta)
 
 //Variáveis de section#campo-tarefas
 var pesquisaTarefa = document.getElementById('ipesquisar-tarefa')
-var btnPesquisaTarefa = document.getElementById('btn-pesquisar-tarefa')
 var filtroTarefa = document.getElementById('ifiltro')
 var campoListaTarefas = document.getElementById('lista-tarefas')
 var campoStatusTarefas = document.getElementById('status-tarefas')

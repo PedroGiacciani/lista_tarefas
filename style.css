@@ -90,7 +90,7 @@ main > section#campo-tarefas > div#lista-tarefas > div > mark{
     border-radius: 10px;
 }
 
-dialog#menu-flutuante{
+dialog{
     background-color: var(--corDestaque);
     width: 150px;
     border-radius: 5px;
@@ -100,12 +100,17 @@ dialog#menu-flutuante{
     transition: opacity .15s ease, overlay .15s ease allow-discrete, display .15s ease allow-discrete;
 }
 
-dialog#menu-flutuante[open]{
+dialog#info{
+    padding: 10px;
+    width: 130px;
+}
+
+dialog[open]{
     opacity: 1;
 }
 
 @starting-style{
-    dialog#menu-flutuante[open]{
+    dialog[open]{
         opacity: 0;
     }
 }
