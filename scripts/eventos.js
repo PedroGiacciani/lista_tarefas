@@ -12,12 +12,12 @@ var menu = document.getElementById('menu-flutuante')
 var info = document.getElementById('info')
 var txtInfo = document.getElementById('texto-info')
 var tarefaSelecionada = 0
-var campoStatusTarefas = document.getElementById('status-tarefas')
+
+//Regex
+var regra1 = /^\w/
+var regra2 = /^.{3,30}$/
 
 export function adicionarTarefa(listaTarefas, titulo, resposta){
-    var regra1 = /^\w/
-    var regra2 = /^.{3,30}$/
-
     if(titulo.length == 0){
         resposta.innerText = ``
         resposta.innerText = `Digite um título para adicionar uma tarefa!!!`
@@ -91,16 +91,17 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
                 tarefaSelecionada = element
             })
 
-            cardTarefa.addEventListener('mouseover', (event) => {    
+            cardTarefa.addEventListener('click', (event) => {    
                 info.style.top = `${event.clientY}px`
                 if(event.clientX/window.innerWidth * 100 > 65){
                     info.style.left = `${event.clientX - 150}px`
                 }else{
                     info.style.left = `${event.clientX}px`
                 }
-                setTimeout(() => {
-                    info.show()
-                }, 2500)
+                info.show()
+                // setTimeout(() => {
+                //     info.show()
+                // }, 2500)
                 txtInfo.innerText = `Criado em: ${element.dataCriacao}`
             })
 
@@ -108,12 +109,13 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
             
             var checkBox = document.getElementById(`${index}`)
             checkBox.addEventListener('change', () => {
+                info.close()
                 mudarStatusTarefa(listaTarefas, checkBox, element, campoListaTarefas, resposta)
             })
         })
         console.log('tarefas carregadas')
-        atualizarDados(listaTarefas)
     }
+    atualizarDados(listaTarefas)
 }
 
 document.addEventListener('click', () => menu.close())
@@ -136,9 +138,13 @@ export function editarTarefa(listaTarefas, resposta){
         const tarefa = new Tarefa(pos.titulo, pos.dataCriacao)
         if(tarefa.titulo == listaTarefas[indice].titulo){
             var novoTitulo = prompt('Qual será o novo título da tarefa?')
-            tarefa.renomear(novoTitulo)
-            listaTarefas[indice].titulo = tarefa.titulo
-            localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+            if(regra1.test(novoTitulo) && regra2.test(novoTitulo)){
+                tarefa.renomear(novoTitulo)
+                listaTarefas[indice].titulo = tarefa.titulo
+                localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+            }else{
+                alert('Seu titulo de tarefa não pode começar com caracteres especiais e precisa ter de 3 a 30!!!')
+            }
         }
     })
     resposta.innerText = `` 
@@ -184,6 +190,11 @@ export function pesquisarTarefa(valor, listaTarefas, campoListaTarefas, resposta
 }
 
 function atualizarDados(listaTarefas){
-    var concluidas = listaTarefas.filter(pos => pos.concluida == true)
-    campoStatusTarefas.innerText = `Tarefas concluídas: ${concluidas.length}/${listaTarefas.length}`
+    var campoStatusTarefas = document.getElementById('status-tarefas')
+    if(listaTarefas.length == 0 || !listaTarefas){
+        campoStatusTarefas.innerText = `Tarefas concluídas: 0/0`
+    }else{
+        var concluidas = listaTarefas.filter(pos => pos.concluida == true)
+        campoStatusTarefas.innerText = `Tarefas concluídas: ${concluidas.length}/${listaTarefas.length}`
+    }
 }
