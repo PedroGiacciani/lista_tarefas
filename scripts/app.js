@@ -39,6 +39,7 @@ inputTarefa.addEventListener('keypress', (event) => {
         inputTarefa.value = ``
         inputTarefa.focus()
     }
+    atualizarDados()
 })
 
 btnAddTarefa.addEventListener('click', () => {
@@ -46,24 +47,32 @@ btnAddTarefa.addEventListener('click', () => {
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
     inputTarefa.value = ``
     inputTarefa.focus()
+    atualizarDados()
 })
 
-document.addEventListener('DOMContentLoaded', () => mostrarTarefas(listaTarefas, campoListaTarefas, resposta))
+document.addEventListener('DOMContentLoaded', () => {
+    mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+    atualizarDados()
+})
 
 excluir.addEventListener('click', () => {
     excluirTarefa(listaTarefas, resposta)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+    atualizarDados()
 })
 
 editar.addEventListener('click', () => {
     editarTarefa(listaTarefas, resposta)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
+    atualizarDados()
 })
 
 filtroTarefa.addEventListener('change', () => {
     filtrarTarefas(filtroTarefa.value, campoListaTarefas, resposta, listaTarefas)
+    atualizarDados()
 })
 
 pesquisaTarefa.addEventListener('input', () => {
     pesquisarTarefa(pesquisaTarefa.value, listaTarefas, campoListaTarefas, resposta)
+    atualizarDados()
 })

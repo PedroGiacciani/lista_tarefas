@@ -135,6 +135,14 @@ dialog#menu-flutuante > div > p:hover{
     background-color: rgba(216, 216, 216, 0.253);
 }
 
+main > section#campo-tarefas >div#status-tarefas{
+    margin-top: 20px;
+    background-color: var(--corDestaque);
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+}
+
 /*CONFIGURAÇÕES DO RODAPÉ*/
 footer{
     text-align: center;

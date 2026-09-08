@@ -12,6 +12,8 @@ var menu = document.getElementById('menu-flutuante')
 var info = document.getElementById('info')
 var txtInfo = document.getElementById('texto-info')
 var tarefaSelecionada = 0
+var campoStatusTarefas = document.getElementById('status-tarefas')
+
 export function adicionarTarefa(listaTarefas, titulo, resposta){
     var regra1 = /^\w/
     var regra2 = /^.{3,30}$/
@@ -110,6 +112,7 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
             })
         })
         console.log('tarefas carregadas')
+        atualizarDados(listaTarefas)
     }
 }
 
@@ -178,4 +181,9 @@ export function filtrarTarefas(valor, campoListaTarefas, resposta, listaTarefas)
 export function pesquisarTarefa(valor, listaTarefas, campoListaTarefas, resposta){
     var novaLista = listaTarefas.filter(pos => pos.titulo.toLowerCase().includes(valor) )
     mostrarTarefas(novaLista, campoListaTarefas, resposta)
-} 
+}
+
+function atualizarDados(listaTarefas){
+    var concluidas = listaTarefas.filter(pos => pos.concluida == true)
+    campoStatusTarefas.innerText = `Tarefas concluídas: ${concluidas.length}/${listaTarefas.length}`
+}
