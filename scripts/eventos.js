@@ -138,11 +138,15 @@ export function editarTarefa(listaTarefas, resposta){
         const tarefa = new Tarefa(pos.titulo, pos.dataCriacao)
         if(tarefa.titulo == listaTarefas[indice].titulo){
             var novoTitulo = prompt('Qual será o novo título da tarefa?')
-            if(regra1.test(novoTitulo) && regra2.test(novoTitulo)){
+            console.log(novoTitulo)
+            if(regra1.test(novoTitulo) && regra2.test(novoTitulo) && novoTitulo != null){
                 tarefa.renomear(novoTitulo)
                 listaTarefas[indice].titulo = tarefa.titulo
                 localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
-            }else{
+            }else if(novoTitulo == null){
+                alert('Operação cancelada')
+            }
+            else{
                 alert('Seu titulo de tarefa não pode começar com caracteres especiais e precisa ter de 3 a 30!!!')
             }
         }
