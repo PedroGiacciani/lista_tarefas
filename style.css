@@ -90,6 +90,14 @@ main > section#campo-tarefas > div#lista-tarefas > div > mark{
     border-radius: 10px;
 }
 
+main > section#campo-tarefas > button#btn-excluir{
+    margin-top: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+}
+
 dialog{
     background-color: var(--corDestaque);
     width: 150px;

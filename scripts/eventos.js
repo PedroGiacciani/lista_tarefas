@@ -202,3 +202,15 @@ function atualizarDados(listaTarefas){
         campoStatusTarefas.innerText = `Tarefas concluídas: ${concluidas.length}/${listaTarefas.length}`
     }
 }
+
+export function excluirTodasTarefas(listaTarefas, resposta){
+    if(!listaTarefas.length){
+        alert('Não há tarefas para serem excluídas!')
+    }else if(confirm('Deseja mesmo excluir todas as tarefas?? Essa opção não tem volta')){
+        listaTarefas.splice(listaTarefas[-1], listaTarefas.length)
+        localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
+        resposta.innerText = ''
+        resposta.innerText = `Toda as tarefas foram excluídas!`
+        resposta.style.color = '#A81C07'
+    }
+}

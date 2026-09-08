@@ -7,7 +7,8 @@ import {
     mostrarTarefas, 
     editarTarefa,
     filtrarTarefas,
-    pesquisarTarefa
+    pesquisarTarefa,
+    excluirTodasTarefas
 } from "./eventos.js"
 
 //Declaração das variáveis principais
@@ -23,7 +24,7 @@ campoResposta.appendChild(resposta)
 var pesquisaTarefa = document.getElementById('ipesquisar-tarefa')
 var filtroTarefa = document.getElementById('ifiltro')
 var campoListaTarefas = document.getElementById('lista-tarefas')
-var campoStatusTarefas = document.getElementById('status-tarefas')
+var excluirTodas = document.getElementById('btn-excluir')
 
 //Variavéis de dialog
 var excluir = document.getElementById('excluir')
@@ -68,4 +69,9 @@ filtroTarefa.addEventListener('change', () => {
 
 pesquisaTarefa.addEventListener('input', () => {
     pesquisarTarefa(pesquisaTarefa.value, listaTarefas, campoListaTarefas, resposta)
+})
+
+excluirTodas.addEventListener('click', () => {
+    excluirTodasTarefas(listaTarefas, resposta)
+    mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
 })
