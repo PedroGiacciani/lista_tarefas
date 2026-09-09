@@ -20,6 +20,9 @@ var campoResposta = document.getElementById('add-tarefa-response')
 var resposta = document.createElement('p')
 campoResposta.appendChild(resposta)
 
+var inputDataC = document.getElementById('idata-conclusao')
+var descricao = document.getElementById('idesc')
+
 //Variáveis de section#campo-tarefas
 var pesquisaTarefa = document.getElementById('ipesquisar-tarefa')
 var filtroTarefa = document.getElementById('ifiltro')
@@ -35,17 +38,21 @@ var listaTarefas = JSON.parse(localStorage.getItem('bancoTarefas')) || []
 
 inputTarefa.addEventListener('keypress', (event) => {
     if(event.key == 'Enter'){
-        adicionarTarefa(listaTarefas, inputTarefa.value, resposta)
+        adicionarTarefa(listaTarefas, inputTarefa.value, inputDataC.value, descricao.value, resposta)
         mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
         inputTarefa.value = ``
+        inputDataC.value = ``
+        descricao.value = ``
         inputTarefa.focus()
     }
 })
 
 btnAddTarefa.addEventListener('click', () => {
-    adicionarTarefa(listaTarefas, inputTarefa.value, resposta)
+    adicionarTarefa(listaTarefas, inputTarefa.value, inputDataC.value, descricao.value, resposta)
     mostrarTarefas(listaTarefas, campoListaTarefas, resposta)
     inputTarefa.value = ``
+    inputDataC.value = ``
+    descricao.value = ``
     inputTarefa.focus()
 })
 

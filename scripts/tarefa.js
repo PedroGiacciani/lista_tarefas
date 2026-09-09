@@ -4,10 +4,12 @@
 
 //Classe tarefa
 export class Tarefa{
-    constructor(titulo, dataCriacao, concluida){
+    constructor(titulo, dataCriacao, dataConclusao, descricao,concluida){
         this.titulo = titulo
-        this.concluida = concluida
         this.dataCriacao = dataCriacao
+        this.dataConclusao = dataConclusao
+        this.descricao = descricao
+        this.concluida = concluida
     }
 
     renomear(novoTitulo){

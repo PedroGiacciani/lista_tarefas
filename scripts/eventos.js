@@ -5,22 +5,30 @@ import { Tarefa } from "./tarefa.js";
 
 //Declaração de variáveis globais
 var data = new Date() 
-var agora = `${data.toLocaleDateString('pt-BR')} ${data.getHours()}:${data.getMinutes()}`
+var agora = `${data.toLocaleDateString('pt-BR')}`
+// var hora = `${data.getHours()}:${data.getMinutes()}`
 
-//Variáveis do menu
+//Variáveis de dialog
 var menu = document.getElementById('menu-flutuante')
-var info = document.getElementById('info')
-var txtInfo = document.getElementById('texto-info')
 var tarefaSelecionada = 0
 
 //Regex
 var regra1 = /^\w/
 var regra2 = /^.{3,30}$/
+var regraData1 = /^(\d{4})-(0?[1-9]||1[0-2])-(0?[1-9]||[12][0-9]||3[01])$/
+var regraData2 = /^(0?[1-9]||[12][0-9]||3[01])\/(0?[1-9]||1[0-2])\/(\d{4})$/
 
-export function adicionarTarefa(listaTarefas, titulo, resposta){
+export function adicionarTarefa(listaTarefas, titulo, data, descricao, resposta){
+    var validarDataC = data.replace(regraData1, `$1$2$3`)
+    var dataConclusao = data.replace(regraData1, `$3/$2/$1`)
+    var dataAgora = agora.replace(regraData2, `$3$2$1`)
     if(titulo.length == 0){
         resposta.innerText = ``
-        resposta.innerText = `Digite um título para adicionar uma tarefa!!!`
+        resposta.innerText = `Coloque um título na sua tarefa.`
+        resposta.style.color = '#A81C07'
+    }else if(dataConclusao.length == 0 || Number(validarDataC) < Number(dataAgora)){
+        resposta.innerText = ``
+        resposta.innerText = `Coloque uma data de conclusão válida na sua tarefa.`
         resposta.style.color = '#A81C07'
     }else if(!regra1.test(titulo)||!regra2.test(titulo)){
         resposta.innerText = ``
@@ -28,24 +36,58 @@ export function adicionarTarefa(listaTarefas, titulo, resposta){
         resposta.style.color = '#A81C07'
     }
     else{
-        const tarefa = new Tarefa(titulo.toLowerCase(), agora, false)
+        const tarefa = new Tarefa(titulo.toLowerCase(), `${agora}`, dataConclusao, descricao, false)
         resposta.innerText =''
         resposta.innerText = `Tarefa registrada!! - ${tarefa.titulo}, criada em ${tarefa.dataCriacao}`
         resposta.style.color = `#0b3d2e`
 
         listaTarefas.push(tarefa)
         localStorage.setItem('bancoTarefas', JSON.stringify(listaTarefas))
-        console.log('tarefa adicionada')
     }
 }
 
 function criarCardTarefa(element, index, campoListaTarefas){
     var cardTarefa = document.createElement('div')
     cardTarefa.setAttribute('id', `${index}`)
+    cardTarefa.classList.add('card-tarefa')
+
+    var cardTarefaSup = document.createElement('section')
+    cardTarefaSup.classList.add('card-tarefa-sup')
+
     var checkBox = document.createElement('input')
-    checkBox.setAttribute('id', `${index}`)
+    checkBox.setAttribute('id', `ch${index}`)
     checkBox.type = 'checkbox'
 
+    var btnMenu = document.createElement('i')
+    btnMenu.classList.add('fa-solid')
+    btnMenu.classList.add('fa-angle-down')
+    btnMenu.setAttribute('id', `bt${index}`)
+
+    var divCheckMenu = document.createElement('div')
+    divCheckMenu.classList.add('check-menu')
+    divCheckMenu.appendChild(btnMenu)
+    divCheckMenu.appendChild(checkBox)
+
+    var conteudoTarefa = document.createElement('section')
+    conteudoTarefa.classList.add('conteudo-tarefa-fechado')
+    conteudoTarefa.setAttribute('id', `ct${index}`)
+
+    var desc = document.createElement('p')
+    desc.classList.add('description')
+    desc.textContent = `Descrição: ${element.descricao}`
+
+    var dataCriacao = document.createElement('p')
+    dataCriacao.classList.add('data-criacao')
+    dataCriacao.textContent = `Criado em: ${element.dataCriacao}`
+
+    var dataConclusao = document.createElement('p')
+    dataConclusao.classList.add('data-conclusao')
+    dataConclusao.textContent = `Data limite: ${element.dataConclusao}`
+
+    conteudoTarefa.appendChild(desc)
+    conteudoTarefa.appendChild(dataCriacao)
+    conteudoTarefa.appendChild(dataConclusao)
+    
     var nomeTarefa = document.createElement('p')
     var statusTarefa = document.createElement('mark')
     
@@ -60,9 +102,11 @@ function criarCardTarefa(element, index, campoListaTarefas){
         checkBox.checked = false
     }
 
-    cardTarefa.appendChild(checkBox)
-    cardTarefa.appendChild(nomeTarefa)
-    cardTarefa.appendChild(statusTarefa)
+    cardTarefaSup.appendChild(divCheckMenu)
+    cardTarefaSup.appendChild(nomeTarefa)
+    cardTarefaSup.appendChild(statusTarefa)
+    cardTarefa.append(cardTarefaSup)
+    cardTarefa.append(conteudoTarefa)
     campoListaTarefas.appendChild(cardTarefa)
 }
 
@@ -81,7 +125,7 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
 
             cardTarefa.addEventListener('contextmenu', (event) => {    
                 event.preventDefault()
-                menu.style.top = `${event.clientY}px`
+                menu.style.top = `${event.layerY}px`
                 if(event.clientX/window.innerWidth * 100 > 65){
                     menu.style.left = `${event.clientX - 150}px`
                 }else{
@@ -91,29 +135,17 @@ export function mostrarTarefas(listaTarefas, campoListaTarefas, resposta){
                 tarefaSelecionada = element
             })
 
-            cardTarefa.addEventListener('click', (event) => {    
-                info.style.top = `${event.clientY}px`
-                if(event.clientX/window.innerWidth * 100 > 65){
-                    info.style.left = `${event.clientX - 150}px`
-                }else{
-                    info.style.left = `${event.clientX}px`
-                }
-                info.show()
-                // setTimeout(() => {
-                //     info.show()
-                // }, 2500)
-                txtInfo.innerText = `Criado em: ${element.dataCriacao}`
-            })
-
-            cardTarefa.addEventListener('mousemove', () => info.close())
-            
-            var checkBox = document.getElementById(`${index}`)
+            var checkBox = document.getElementById(`ch${index}`)
             checkBox.addEventListener('change', () => {
-                info.close()
                 mudarStatusTarefa(listaTarefas, checkBox, element, campoListaTarefas, resposta)
             })
+
+            var btnMenu = document.getElementById(`bt${index}`)
+            var conteudoTarefa = document.getElementById(`ct${index}`)
+            btnMenu.addEventListener('click', () => {
+                abrirConteudoTarefa(conteudoTarefa, btnMenu)
+            })
         })
-        console.log('tarefas carregadas')
     }
     atualizarDados(listaTarefas)
 }
@@ -135,7 +167,7 @@ export function editarTarefa(listaTarefas, resposta){
     var indice = listaTarefas.indexOf(tarefaSelecionada)
     var nome = tarefaSelecionada.titulo
     listaTarefas.forEach(pos => {
-        const tarefa = new Tarefa(pos.titulo, pos.dataCriacao)
+        const tarefa = new Tarefa(pos.titulo, pos.dataCriacao, pos.dataConclusao, pos.descricao, pos.concluida)
         if(tarefa.titulo == listaTarefas[indice].titulo){
             var novoTitulo = prompt('Qual será o novo título da tarefa?')
             console.log(novoTitulo)
@@ -159,7 +191,7 @@ export function editarTarefa(listaTarefas, resposta){
 function mudarStatusTarefa(listaTarefas, checkBox, element, campoListaTarefas, resposta){
     var indice = listaTarefas.indexOf(element)
     console.log(checkBox.checked)
-    const tarefa = new Tarefa(element.titulo, element.dataCriacao, element.concluida)
+    const tarefa = new Tarefa(element.titulo, element.dataCriacao, element.dataConclusao, element.descricao, element.concluida)
     console.log(tarefa)
     tarefa.mudarStatus()
     listaTarefas[indice].concluida = tarefa.concluida
@@ -212,5 +244,21 @@ export function excluirTodasTarefas(listaTarefas, resposta){
         resposta.innerText = ''
         resposta.innerText = `Toda as tarefas foram excluídas!`
         resposta.style.color = '#A81C07'
+    }
+}
+
+function abrirConteudoTarefa(conteudoTarefa, btnMenu){
+    if(conteudoTarefa.className == 'conteudo-tarefa-fechado'){
+        conteudoTarefa.classList.remove('conteudo-tarefa-fechado')
+        conteudoTarefa.classList.add('conteudo-tarefa-aberto')
+
+        btnMenu.classList.remove('fa-angle-down')
+        btnMenu.classList.add('fa-angle-up')
+    }else{
+        conteudoTarefa.classList.remove('conteudo-tarefa-aberto')
+        conteudoTarefa.classList.add('conteudo-tarefa-fechado')
+
+        btnMenu.classList.remove('fa-angle-up')
+        btnMenu.classList.add('fa-angle-down')
     }
 }

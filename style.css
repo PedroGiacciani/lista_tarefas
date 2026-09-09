@@ -48,8 +48,34 @@ section#adicionar-tarefa, section#campo-tarefas{
     padding: 15px;
 }
 
-main > section#adicionar-tarefa{
-    height: 75px;
+main > section#adicionar-tarefa > h2{
+    font-size: 1.2em;
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+main > section#adicionar-tarefa > div#flexivel{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+main > section#adicionar-tarefa > div#flexivel input{
+    border-radius: 5px;
+    border: 0;
+    padding: 2px;
+    border: 1px solid rgba(233, 233, 233, 0.678);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.164);
+    width: 50%;
+}
+
+main > section#adicionar-tarefa > div#flexivel > textarea{
+    max-width: 100%;
+    max-height: 150px;
+    min-height: 50px;
+    padding: 2px;
+    border-radius: 10px;
 }
 
 main > section#adicionar-tarefa > div#add-tarefa-response{
@@ -68,9 +94,9 @@ main > section#campo-tarefas > div#lista-tarefas{
     margin-top: 30px;
 }
 
-main > section#campo-tarefas > div#lista-tarefas > div{
+main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     background-color: white;
@@ -78,25 +104,67 @@ main > section#campo-tarefas > div#lista-tarefas > div{
     width: 100%;
     margin: 10px 0px;
     padding: 10px 5px;
+}
 
+main > section#campo-tarefas > div#lista-tarefas > div.card-tarefa > section.card-tarefa-sup{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 main > section#campo-tarefas > div#lista-tarefas > p{
     margin: 30px;
 }
 
-main > section#campo-tarefas > div#lista-tarefas > div > mark{
+main > section#campo-tarefas > div#lista-tarefas  mark{
     padding: 4px;
     border-radius: 10px;
 }
 
-main > section#campo-tarefas > button#btn-excluir{
+div.check-menu > i{
+    margin-right: 10px;
+}
+
+.conteudo-tarefa-fechado{
+    display: none;
+    transition: display 3s ease;
+}
+
+.conteudo-tarefa-aberto{
+    display: grid;
+    grid-template: 1fr 35px / 1fr 1fr;
+}
+
+.conteudo-tarefa-aberto > p{
+    margin: 10px;
+}
+
+.description{
+    grid-column: span 2;
+    text-align: justify;
+}
+
+main > section#campo-tarefas > button#btn-excluir,
+main > section#adicionar-tarefa > button#btn-adicionar-tarefa
+{
     margin-top: 15px;
     padding: 5px;
     border-radius: 5px;
+    border: 1px solid rgba(233, 233, 233, 0.678);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.164);
     cursor: pointer;
     background-color: white;
+    transition: background-color .3s;
 }
+
+main > section#campo-tarefas > button#btn-excluir:hover,
+main > section#adicionar-tarefa > button#btn-adicionar-tarefa:hover
+{
+    background-color: rgba(206, 198, 198, 0.192);
+}
+
 
 dialog{
     background-color: var(--corDestaque);

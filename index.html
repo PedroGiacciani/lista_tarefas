@@ -15,10 +15,17 @@
         </header>
         <main>
             <section id="adicionar-tarefa">
-                <p>Adicionar tarefa: <input type="text" placeholder="Digite o nome da tarefa" id="iadd-tarefa" name="add-tarefa"> <button id="btn-adicionar-tarefa">Adicionar</button></p>
+                <h2>Adicionar nova tarefa</h2>
+                <div id="flexivel">
+                    <p>Título da tarefa: <input type="text" placeholder="Digite o nome da tarefa" id="iadd-tarefa" name="add-tarefa"></p>
+                    <p>Data conclusão: <input type="date" name="data-conclusao" id="idata-conclusao"></p>
+                    <p>Descreva a tarefa:</p>
+                    <textarea name="desc" id="idesc" placeholder="Digite aqui a descrição da tarefa"></textarea>
+                </div>
                 <div id="add-tarefa-response">
                     <!--Responde se a tarefa foi adicionada-->
                 </div>
+                <button id="btn-adicionar-tarefa">Adicionar Tarefa</button>
             </section>
             <section id="campo-tarefas">
                 <p>Pesquisar por tarefa: <input type="text" placeholder="Digite o nome da tarefa" id="ipesquisar-tarefa" name="pesquisar-tarefa"></p>
@@ -48,9 +55,6 @@
             <p id="excluir">Excluir tarefa <i class="fa-solid fa-trash"></i></p>
             <p id="editar">Editar tarefa <i class="fa-solid fa-pencil"></i></p>
         </div>
-    </dialog>
-    <dialog id="info">
-        <p id="texto-info">Criado em:  </p>
     </dialog>
     <script src="scripts/app.js" type="module"></script>
 </body>
